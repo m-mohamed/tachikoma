@@ -2,22 +2,22 @@ exports.id = 642;
 exports.ids = [642];
 exports.modules = {
 
-/***/ 1680:
+/***/ 680:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__(7739)
+module.exports = __webpack_require__(739)
 
 
 /***/ }),
 
-/***/ 7739:
+/***/ 739:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const stream = __webpack_require__(2203)
-const EventEmitter = __webpack_require__(4434)
-const LZWEncoder = __webpack_require__(3500)
+const stream = __webpack_require__(203)
+const EventEmitter = __webpack_require__(434)
+const LZWEncoder = __webpack_require__(500)
 const NeuQuant = __webpack_require__(222)
-const { OctreeQuant, Color } = __webpack_require__(2756)
+const { OctreeQuant, Color } = __webpack_require__(756)
 
 class ByteArray {
   constructor() {
@@ -417,7 +417,7 @@ module.exports = GIFEncoder
 
 /***/ }),
 
-/***/ 3500:
+/***/ 500:
 /***/ ((module) => {
 
 /*
@@ -651,7 +651,7 @@ module.exports = LZWEncoder
 
 /***/ }),
 
-/***/ 2756:
+/***/ 756:
 /***/ ((module) => {
 
 /*
@@ -1334,7 +1334,7 @@ module.exports = NeuQuant
 
 /***/ }),
 
-/***/ 3642:
+/***/ 642:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1347,14 +1347,14 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: withTmpDir
 
 // EXTERNAL MODULE: external "node:child_process"
-var external_node_child_process_ = __webpack_require__(1421);
+var external_node_child_process_ = __webpack_require__(421);
 // EXTERNAL MODULE: external "node:fs"
-var external_node_fs_ = __webpack_require__(3024);
+var external_node_fs_ = __webpack_require__(24);
 var external_node_fs_default = /*#__PURE__*/__webpack_require__.n(external_node_fs_);
 // EXTERNAL MODULE: external "node:os"
-var external_node_os_ = __webpack_require__(8161);
+var external_node_os_ = __webpack_require__(161);
 // EXTERNAL MODULE: external "node:path"
-var external_node_path_ = __webpack_require__(6760);
+var external_node_path_ = __webpack_require__(760);
 var external_node_path_default = /*#__PURE__*/__webpack_require__.n(external_node_path_);
 // EXTERNAL MODULE: ../types/grid.ts
 var types_grid = __webpack_require__(105);
@@ -1499,12 +1499,12 @@ const step = (grid, stack, snake) => {
 };
 
 // EXTERNAL MODULE: external "canvas"
-var external_canvas_ = __webpack_require__(9919);
+var external_canvas_ = __webpack_require__(919);
 // EXTERNAL MODULE: ../../node_modules/gif-encoder-2/index.js
-var gif_encoder_2 = __webpack_require__(1680);
+var gif_encoder_2 = __webpack_require__(680);
 var gif_encoder_2_default = /*#__PURE__*/__webpack_require__.n(gif_encoder_2);
 // EXTERNAL MODULE: external "gifsicle"
-var external_gifsicle_ = __webpack_require__(5667);
+var external_gifsicle_ = __webpack_require__(667);
 var external_gifsicle_default = /*#__PURE__*/__webpack_require__.n(external_gifsicle_);
 ;// CONCATENATED MODULE: ../gif-creator/index.ts
 

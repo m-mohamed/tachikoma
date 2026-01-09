@@ -643,12 +643,12 @@ const generateContributionSnake = async (userName, outputs, options) => {
         switch (format) {
             case "svg": {
                 console.log(`🖌 creating svg (outputs[${i}])`);
-                const { createSvg } = await __webpack_require__.e(/* import() */ 578).then(__webpack_require__.bind(__webpack_require__, 4578));
+                const { createSvg } = await __webpack_require__.e(/* import() */ 547).then(__webpack_require__.bind(__webpack_require__, 547));
                 return createSvg(grid, cells, chain, drawOptions, animationOptions);
             }
             case "gif": {
                 console.log(`📹 creating gif (outputs[${i}])`);
-                const { createGif } = await __webpack_require__.e(/* import() */ 642).then(__webpack_require__.bind(__webpack_require__, 3642));
+                const { createGif } = await __webpack_require__.e(/* import() */ 642).then(__webpack_require__.bind(__webpack_require__, 642));
                 return await createGif(grid, cells, chain, drawOptions, animationOptions);
             }
         }
