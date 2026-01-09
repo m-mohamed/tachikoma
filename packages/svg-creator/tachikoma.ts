@@ -38,27 +38,16 @@ export const createTachikoma = (
     y: snake[1] - 2 - 0.5, // head y
   }));
 
-  // Find when the Tachikoma changes direction (for facing)
-  const getDirection = (i: number): "left" | "right" => {
-    if (i === 0) return "right";
-    const prev = headPositions[i - 1];
-    const curr = headPositions[i];
-    return curr.x >= prev.x ? "right" : "left";
-  };
-
   // Create keyframes for head movement
+  // Note: removed scaleX(-1) flip as it caused spinning animation artifact
   const keyframes = removeInterpolatedPositions(
     headPositions.map((pos, i, { length }) => ({
       ...pos,
       t: i / length,
-      dir: getDirection(i),
     })),
-  ).map(({ t, dir, ...p }) => ({
+  ).map(({ t, ...p }) => ({
     t,
-    style:
-      dir === "left"
-        ? `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px) scaleX(-1)`
-        : `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px)`,
+    style: `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px)`,
   }));
 
   const styles = [
