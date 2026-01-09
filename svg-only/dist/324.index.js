@@ -643,7 +643,7 @@ const generateContributionSnake = async (userName, outputs, options) => {
         switch (format) {
             case "svg": {
                 console.log(`🖌 creating svg (outputs[${i}])`);
-                const { createSvg } = await __webpack_require__.e(/* import() */ 547).then(__webpack_require__.bind(__webpack_require__, 547));
+                const { createSvg } = await __webpack_require__.e(/* import() */ 280).then(__webpack_require__.bind(__webpack_require__, 280));
                 return createSvg(grid, cells, chain, drawOptions, animationOptions);
             }
             case "gif": {

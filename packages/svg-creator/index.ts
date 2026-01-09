@@ -9,7 +9,7 @@ import { getHeadX, getHeadY } from "@snk/types/snake";
 import type { Snake } from "@snk/types/snake";
 import type { Grid, Color, Empty } from "@snk/types/grid";
 import type { Point } from "@snk/types/point";
-import { createTachikoma } from "./tachikoma";
+import { createGundam } from "./gundam";
 import { createGrid } from "./grid";
 import { createStack } from "./stack";
 import { h } from "./xml-utils";
@@ -90,7 +90,7 @@ export const createSvg = (
       (grid.height + 2) * drawOptions.sizeCell,
       duration,
     ),
-    createTachikoma(chain, drawOptions, duration),
+    createGundam(chain, drawOptions, duration),
   ];
 
   const viewBox = [

@@ -1,9 +1,9 @@
 "use strict";
-exports.id = 547;
-exports.ids = [547];
+exports.id = 280;
+exports.ids = [280];
 exports.modules = {
 
-/***/ 547:
+/***/ 280:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 
@@ -47,34 +47,59 @@ const minifyCss = (css) => css
     .replace(/\;\s*\}/g, "}")
     .trim();
 
-;// CONCATENATED MODULE: ../svg-creator/tachikoma.ts
+;// CONCATENATED MODULE: ../svg-creator/gundam.ts
 
-// Tachikoma SVG path - spider-tank from Ghost in the Shell
-// Designed for ~16px cell, scales with sizeCell
-const createTachikomaPath = (size) => {
-    const s = size / 16; // scale factor
-    // Simplified Tachikoma: body + eye + 4 legs
+// Simplified RX-78-2 Gundam SVG - iconic mecha from Mobile Suit Gundam
+// Designed for 48px height, scaled proportionally
+const createGundamPath = (height) => {
+    const s = height / 48; // scale factor (base design is 48px tall)
+    // Iconic RX-78-2 features:
+    // - V-fin antenna (yellow)
+    // - Dual yellow eyes
+    // - White/gray body armor
+    // - Blue chest
+    // - Red accents (chin, feet)
     return [
-        `<ellipse cx="${8 * s}" cy="${8 * s}" rx="${5 * s}" ry="${4 * s}" class="tachi-body"/>`,
-        `<circle cx="${10 * s}" cy="${7 * s}" r="${2 * s}" class="tachi-eye"/>`,
-        `<circle cx="${10.5 * s}" cy="${6.5 * s}" r="${0.8 * s}" class="tachi-pupil"/>`,
-        `<path class="tachi-leg" d="M${3 * s},${6 * s} Q${1 * s},${3 * s} ${0 * s},${1 * s}"/>`,
-        `<path class="tachi-leg" d="M${3 * s},${10 * s} Q${1 * s},${13 * s} ${0 * s},${15 * s}"/>`,
-        `<path class="tachi-leg" d="M${13 * s},${6 * s} Q${15 * s},${3 * s} ${16 * s},${1 * s}"/>`,
-        `<path class="tachi-leg" d="M${13 * s},${10 * s} Q${15 * s},${13 * s} ${16 * s},${15 * s}"/>`,
+        // V-fin antenna (iconic yellow horns)
+        `<path class="gundam-vfin" d="M${20 * s},${4 * s} L${24 * s},${0 * s} L${24 * s},${6 * s} Z"/>`,
+        `<path class="gundam-vfin" d="M${28 * s},${4 * s} L${24 * s},${0 * s} L${24 * s},${6 * s} Z"/>`,
+        // Head (white with red chin)
+        `<rect class="gundam-head" x="${19 * s}" y="${6 * s}" width="${10 * s}" height="${8 * s}" rx="${1 * s}"/>`,
+        `<rect class="gundam-chin" x="${21 * s}" y="${12 * s}" width="${6 * s}" height="${2 * s}"/>`,
+        // Eyes (yellow dual sensors)
+        `<rect class="gundam-eye" x="${20 * s}" y="${8 * s}" width="${3 * s}" height="${2 * s}"/>`,
+        `<rect class="gundam-eye" x="${25 * s}" y="${8 * s}" width="${3 * s}" height="${2 * s}"/>`,
+        // Torso/Chest (blue)
+        `<path class="gundam-chest" d="M${16 * s},${14 * s} L${32 * s},${14 * s} L${30 * s},${26 * s} L${18 * s},${26 * s} Z"/>`,
+        // Chest vents (yellow accents)
+        `<rect class="gundam-vent" x="${19 * s}" y="${18 * s}" width="${4 * s}" height="${1 * s}"/>`,
+        `<rect class="gundam-vent" x="${25 * s}" y="${18 * s}" width="${4 * s}" height="${1 * s}"/>`,
+        // Waist (red)
+        `<rect class="gundam-waist" x="${18 * s}" y="${26 * s}" width="${12 * s}" height="${4 * s}"/>`,
+        // Arms (white)
+        `<rect class="gundam-arm" x="${10 * s}" y="${14 * s}" width="${6 * s}" height="${16 * s}" rx="${2 * s}"/>`,
+        `<rect class="gundam-arm" x="${32 * s}" y="${14 * s}" width="${6 * s}" height="${16 * s}" rx="${2 * s}"/>`,
+        // Hands (gray)
+        `<rect class="gundam-hand" x="${11 * s}" y="${30 * s}" width="${4 * s}" height="${4 * s}" rx="${1 * s}"/>`,
+        `<rect class="gundam-hand" x="${33 * s}" y="${30 * s}" width="${4 * s}" height="${4 * s}" rx="${1 * s}"/>`,
+        // Legs (white)
+        `<rect class="gundam-leg" x="${18 * s}" y="${30 * s}" width="${5 * s}" height="${14 * s}"/>`,
+        `<rect class="gundam-leg" x="${25 * s}" y="${30 * s}" width="${5 * s}" height="${14 * s}"/>`,
+        // Feet (red)
+        `<path class="gundam-foot" d="M${16 * s},${44 * s} L${24 * s},${44 * s} L${24 * s},${48 * s} L${14 * s},${48 * s} Z"/>`,
+        `<path class="gundam-foot" d="M${24 * s},${44 * s} L${32 * s},${44 * s} L${34 * s},${48 * s} L${24 * s},${48 * s} Z"/>`,
     ];
 };
-const createTachikoma = (chain, { sizeCell }, duration) => {
+const createGundam = (chain, { sizeCell }, duration) => {
     if (!chain[0])
         return { svgElements: [], styles: [] };
-    // Track head positions for Tachikoma movement
-    // Offset by -0.5 to center the 2x sized Tachikoma on the cell
+    // Track head positions for Gundam movement
+    // Offset to center the 48px tall Gundam on the path
     const headPositions = chain.map((snake) => ({
-        x: snake[0] - 2 - 0.5, // head x (offset for centering)
-        y: snake[1] - 2 - 0.5, // head y
+        x: snake[0] - 2 - 1, // head x (offset for centering)
+        y: snake[1] - 2 - 1.5, // head y (Gundam is taller)
     }));
-    // Create keyframes for head movement
-    // Note: removed scaleX(-1) flip as it caused spinning animation artifact
+    // Create keyframes for movement
     const keyframes = removeInterpolatedPositions(headPositions.map((pos, i, { length }) => ({
         ...pos,
         t: i / length,
@@ -83,45 +108,69 @@ const createTachikoma = (chain, { sizeCell }, duration) => {
         style: `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px)`,
     }));
     const styles = [
-        // Tachikoma body styles - blue spider-tank from Ghost in the Shell
-        `.tachi-body {
-      fill: #4a9eff;
-      stroke: #2d7dd2;
-      stroke-width: 1;
-      filter: drop-shadow(0 0 3px rgba(74, 158, 255, 0.5));
+        // Gundam color styles - classic RX-78-2 colors
+        `.gundam-vfin {
+      fill: #FFD700;
+      stroke: #B8860B;
+      stroke-width: 0.5;
     }`,
-        `.tachi-eye {
-      fill: #ff6b6b;
-      stroke: #c92a2a;
-      stroke-width: 0.8;
-      filter: drop-shadow(0 0 2px #ff6b6b);
+        `.gundam-head {
+      fill: #FFFFFF;
+      stroke: #333333;
+      stroke-width: 0.5;
     }`,
-        `.tachi-pupil {
-      fill: #1a1a2e;
+        `.gundam-chin {
+      fill: #CB1009;
     }`,
-        `.tachi-leg {
-      fill: none;
-      stroke: #4a9eff;
-      stroke-width: 2;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 2px rgba(74, 158, 255, 0.5));
+        `.gundam-eye {
+      fill: #FFD700;
+      stroke: #B8860B;
+      stroke-width: 0.3;
     }`,
-        // Tachikoma container animation
-        `.tachikoma {
-      animation: tachi-move linear ${duration}ms infinite;
+        `.gundam-chest {
+      fill: #4169E1;
+      stroke: #2850A7;
+      stroke-width: 0.5;
     }`,
-        createAnimation("tachi-move", keyframes),
-        // Projectile styles
-        `.projectile {
-      fill: #ff6b6b;
-      filter: drop-shadow(0 0 2px #ff6b6b);
+        `.gundam-vent {
+      fill: #FFD700;
     }`,
+        `.gundam-waist {
+      fill: #CB1009;
+      stroke: #8B0000;
+      stroke-width: 0.3;
+    }`,
+        `.gundam-arm {
+      fill: #F5F5F5;
+      stroke: #333333;
+      stroke-width: 0.5;
+    }`,
+        `.gundam-hand {
+      fill: #9A9999;
+      stroke: #666666;
+      stroke-width: 0.3;
+    }`,
+        `.gundam-leg {
+      fill: #F5F5F5;
+      stroke: #333333;
+      stroke-width: 0.5;
+    }`,
+        `.gundam-foot {
+      fill: #CB1009;
+      stroke: #8B0000;
+      stroke-width: 0.5;
+    }`,
+        // Gundam container animation
+        `.gundam {
+      animation: gundam-move linear ${duration}ms infinite;
+    }`,
+        createAnimation("gundam-move", keyframes),
     ];
-    // Make Tachikoma 2x cell size for better visibility
-    const tachiSize = sizeCell * 2;
+    // Gundam at 48px height (3x cell size)
+    const gundamHeight = sizeCell * 3;
     const svgElements = [
-        `<g class="tachikoma">`,
-        ...createTachikomaPath(tachiSize),
+        `<g class="gundam">`,
+        ...createGundamPath(gundamHeight),
         `</g>`,
     ];
     return { svgElements, styles };
@@ -316,7 +365,7 @@ const createSvg = (grid, cells, chain, drawOptions, animationOptions) => {
     const elements = [
         createGrid(livingCells, drawOptions, duration),
         createStack(livingCells, drawOptions, grid.width * drawOptions.sizeCell, (grid.height + 2) * drawOptions.sizeCell, duration),
-        createTachikoma(chain, drawOptions, duration),
+        createGundam(chain, drawOptions, duration),
     ];
     const viewBox = [
         -drawOptions.sizeCell,
