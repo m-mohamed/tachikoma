@@ -236,8 +236,8 @@ export const createGundam = (
     createAnimation("gundam-move", keyframes),
   ];
 
-  // Gundam at 64px height (4x cell size) for better detail
-  const gundamHeight = sizeCell * 4;
+  // Gundam at 48px height (3x cell size) - balanced detail vs proportion
+  const gundamHeight = sizeCell * 3;
 
   const svgElements = [
     `<g class="gundam">`,
