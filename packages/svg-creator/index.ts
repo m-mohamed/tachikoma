@@ -9,7 +9,7 @@ import { getHeadX, getHeadY } from "@snk/types/snake";
 import type { Snake } from "@snk/types/snake";
 import type { Grid, Color, Empty } from "@snk/types/grid";
 import type { Point } from "@snk/types/point";
-import { createSnake } from "./snake";
+import { createTachikoma } from "./tachikoma";
 import { createGrid } from "./grid";
 import { createStack } from "./stack";
 import { h } from "./xml-utils";
@@ -90,7 +90,7 @@ export const createSvg = (
       (grid.height + 2) * drawOptions.sizeCell,
       duration,
     ),
-    createSnake(chain, drawOptions, duration),
+    createTachikoma(chain, drawOptions, duration),
   ];
 
   const viewBox = [
@@ -116,7 +116,7 @@ export const createSvg = (
     }).replace("/>", ">"),
 
     "<desc>",
-    "Generated with https://github.com/Platane/snk",
+    "Generated with https://github.com/m-mohamed/tachikoma",
     "</desc>",
 
     "<style>",
