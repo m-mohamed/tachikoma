@@ -36,7 +36,7 @@ export const parseEntry = (entry: string) => {
   };
   const animationOptions: AnimationOptions = {
     frameByStep: 1,
-    stepDurationMs: 100,
+    stepDurationMs: 150, // Slower for better visibility
   };
 
   {

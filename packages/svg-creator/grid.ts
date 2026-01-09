@@ -48,13 +48,16 @@ export const createGrid = (
       const animationName = id;
       const explosionName = `exp-${id}`;
 
-      // Cell destruction animation - flash then shrink to nothing
+      // Cell destruction animation - delay then flash and shrink (looks like being shot)
+      // Tachikoma reaches cell at t, explosion happens at t + 0.003 (small delay for "shooting" feel)
+      const hitTime = t + 0.003;
       styles.push(
         createAnimation(animationName, [
-          { t: t - 0.002, style: `fill:var(--c${color});transform:scale(1)` },
-          { t: t - 0.001, style: `fill:#ff6b6b;transform:scale(1.2)` },
-          { t: t + 0.001, style: `fill:var(--ce);transform:scale(0)` },
-          { t: t + 0.01, style: `fill:var(--ce);transform:scale(1)` },
+          { t: t, style: `fill:var(--c${color});transform:scale(1)` },
+          { t: hitTime, style: `fill:var(--c${color});transform:scale(1)` },
+          { t: hitTime + 0.001, style: `fill:#ff6b6b;transform:scale(1.3)` },
+          { t: hitTime + 0.003, style: `fill:var(--ce);transform:scale(0)` },
+          { t: hitTime + 0.02, style: `fill:var(--ce);transform:scale(1)` },
           { t: 1, style: `fill:var(--ce);transform:scale(1)` },
         ]),
 
@@ -65,11 +68,11 @@ export const createGrid = (
           transform-origin: center;
         }`,
 
-        // Explosion flash overlay
+        // Explosion flash overlay - bigger and more visible
         createAnimation(explosionName, [
-          { t: t - 0.002, style: `opacity:0;r:0` },
-          { t: t - 0.001, style: `opacity:1;r:${sizeDot}` },
-          { t: t + 0.005, style: `opacity:0;r:${sizeDot * 1.5}` },
+          { t: hitTime, style: `opacity:0;r:0` },
+          { t: hitTime + 0.001, style: `opacity:1;r:${sizeDot * 1.2}` },
+          { t: hitTime + 0.008, style: `opacity:0;r:${sizeDot * 2}` },
           { t: 1, style: `opacity:0;r:0` },
         ]),
 

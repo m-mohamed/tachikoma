@@ -251,7 +251,7 @@ const parseEntry = (entry) => {
     };
     const animationOptions = {
         frameByStep: 1,
-        stepDurationMs: 100,
+        stepDurationMs: 150, // Slower for better visibility
     };
     {
         const palette = palettes[sp.get("palette")];

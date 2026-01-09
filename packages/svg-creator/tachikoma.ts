@@ -10,21 +10,18 @@ export type Options = {
 
 // Tachikoma SVG path - spider-tank from Ghost in the Shell
 // Designed for ~16px cell, scales with sizeCell
-const createTachikomaPath = (size: number) => {
+const createTachikomaPath = (size: number): string[] => {
   const s = size / 16; // scale factor
   // Simplified Tachikoma: body + eye + 4 legs
-  return `
-    <!-- Body (rounded hull) -->
-    <ellipse cx="${8 * s}" cy="${8 * s}" rx="${5 * s}" ry="${4 * s}" class="tachi-body"/>
-    <!-- Eye/sensor -->
-    <circle cx="${10 * s}" cy="${7 * s}" r="${2 * s}" class="tachi-eye"/>
-    <circle cx="${10.5 * s}" cy="${6.5 * s}" r="${0.8 * s}" class="tachi-pupil"/>
-    <!-- Legs (4 spider legs) -->
-    <path class="tachi-leg" d="M${3 * s},${6 * s} Q${1 * s},${3 * s} ${0 * s},${1 * s}"/>
-    <path class="tachi-leg" d="M${3 * s},${10 * s} Q${1 * s},${13 * s} ${0 * s},${15 * s}"/>
-    <path class="tachi-leg" d="M${13 * s},${6 * s} Q${15 * s},${3 * s} ${16 * s},${1 * s}"/>
-    <path class="tachi-leg" d="M${13 * s},${10 * s} Q${15 * s},${13 * s} ${16 * s},${15 * s}"/>
-  `;
+  return [
+    `<ellipse cx="${8 * s}" cy="${8 * s}" rx="${5 * s}" ry="${4 * s}" class="tachi-body"/>`,
+    `<circle cx="${10 * s}" cy="${7 * s}" r="${2 * s}" class="tachi-eye"/>`,
+    `<circle cx="${10.5 * s}" cy="${6.5 * s}" r="${0.8 * s}" class="tachi-pupil"/>`,
+    `<path class="tachi-leg" d="M${3 * s},${6 * s} Q${1 * s},${3 * s} ${0 * s},${1 * s}"/>`,
+    `<path class="tachi-leg" d="M${3 * s},${10 * s} Q${1 * s},${13 * s} ${0 * s},${15 * s}"/>`,
+    `<path class="tachi-leg" d="M${13 * s},${6 * s} Q${15 * s},${3 * s} ${16 * s},${1 * s}"/>`,
+    `<path class="tachi-leg" d="M${13 * s},${10 * s} Q${15 * s},${13 * s} ${16 * s},${15 * s}"/>`,
+  ];
 };
 
 export const createTachikoma = (
@@ -35,13 +32,11 @@ export const createTachikoma = (
   if (!chain[0]) return { svgElements: [], styles: [] };
 
   // Track head positions for Tachikoma movement
+  // Offset by -0.5 to center the 2x sized Tachikoma on the cell
   const headPositions: Point[] = chain.map((snake) => ({
-    x: snake[0] - 2, // head x (offset by 2 as in original)
-    y: snake[1] - 2, // head y
+    x: snake[0] - 2 - 0.5, // head x (offset for centering)
+    y: snake[1] - 2 - 0.5, // head y
   }));
-
-  const transform = ({ x, y }: Point) =>
-    `transform:translate(${x * sizeCell}px,${y * sizeCell}px)`;
 
   // Find when the Tachikoma changes direction (for facing)
   const getDirection = (i: number): "left" | "right" => {
@@ -60,29 +55,35 @@ export const createTachikoma = (
     })),
   ).map(({ t, dir, ...p }) => ({
     t,
-    style: `${transform(p)}${dir === "left" ? ";transform:translate(" + (p.x * sizeCell) + "px," + (p.y * sizeCell) + "px) scaleX(-1)" : ""}`,
+    style:
+      dir === "left"
+        ? `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px) scaleX(-1)`
+        : `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px)`,
   }));
 
   const styles = [
-    // Tachikoma body styles
+    // Tachikoma body styles - blue spider-tank from Ghost in the Shell
     `.tachi-body {
-      fill: var(--cs);
-      stroke: var(--cs);
-      stroke-width: 0.5;
+      fill: #4a9eff;
+      stroke: #2d7dd2;
+      stroke-width: 1;
+      filter: drop-shadow(0 0 3px rgba(74, 158, 255, 0.5));
     }`,
     `.tachi-eye {
       fill: #ff6b6b;
       stroke: #c92a2a;
-      stroke-width: 0.5;
+      stroke-width: 0.8;
+      filter: drop-shadow(0 0 2px #ff6b6b);
     }`,
     `.tachi-pupil {
       fill: #1a1a2e;
     }`,
     `.tachi-leg {
       fill: none;
-      stroke: var(--cs);
-      stroke-width: 1.5;
+      stroke: #4a9eff;
+      stroke-width: 2;
       stroke-linecap: round;
+      filter: drop-shadow(0 0 2px rgba(74, 158, 255, 0.5));
     }`,
     // Tachikoma container animation
     `.tachikoma {
@@ -97,9 +98,12 @@ export const createTachikoma = (
     }`,
   ];
 
+  // Make Tachikoma 2x cell size for better visibility
+  const tachiSize = sizeCell * 2;
+
   const svgElements = [
     `<g class="tachikoma">`,
-    createTachikomaPath(sizeCell),
+    ...createTachikomaPath(tachiSize),
     `</g>`,
   ];
 

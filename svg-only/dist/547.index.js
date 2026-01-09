@@ -54,28 +54,25 @@ const minifyCss = (css) => css
 const createTachikomaPath = (size) => {
     const s = size / 16; // scale factor
     // Simplified Tachikoma: body + eye + 4 legs
-    return `
-    <!-- Body (rounded hull) -->
-    <ellipse cx="${8 * s}" cy="${8 * s}" rx="${5 * s}" ry="${4 * s}" class="tachi-body"/>
-    <!-- Eye/sensor -->
-    <circle cx="${10 * s}" cy="${7 * s}" r="${2 * s}" class="tachi-eye"/>
-    <circle cx="${10.5 * s}" cy="${6.5 * s}" r="${0.8 * s}" class="tachi-pupil"/>
-    <!-- Legs (4 spider legs) -->
-    <path class="tachi-leg" d="M${3 * s},${6 * s} Q${1 * s},${3 * s} ${0 * s},${1 * s}"/>
-    <path class="tachi-leg" d="M${3 * s},${10 * s} Q${1 * s},${13 * s} ${0 * s},${15 * s}"/>
-    <path class="tachi-leg" d="M${13 * s},${6 * s} Q${15 * s},${3 * s} ${16 * s},${1 * s}"/>
-    <path class="tachi-leg" d="M${13 * s},${10 * s} Q${15 * s},${13 * s} ${16 * s},${15 * s}"/>
-  `;
+    return [
+        `<ellipse cx="${8 * s}" cy="${8 * s}" rx="${5 * s}" ry="${4 * s}" class="tachi-body"/>`,
+        `<circle cx="${10 * s}" cy="${7 * s}" r="${2 * s}" class="tachi-eye"/>`,
+        `<circle cx="${10.5 * s}" cy="${6.5 * s}" r="${0.8 * s}" class="tachi-pupil"/>`,
+        `<path class="tachi-leg" d="M${3 * s},${6 * s} Q${1 * s},${3 * s} ${0 * s},${1 * s}"/>`,
+        `<path class="tachi-leg" d="M${3 * s},${10 * s} Q${1 * s},${13 * s} ${0 * s},${15 * s}"/>`,
+        `<path class="tachi-leg" d="M${13 * s},${6 * s} Q${15 * s},${3 * s} ${16 * s},${1 * s}"/>`,
+        `<path class="tachi-leg" d="M${13 * s},${10 * s} Q${15 * s},${13 * s} ${16 * s},${15 * s}"/>`,
+    ];
 };
 const createTachikoma = (chain, { sizeCell }, duration) => {
     if (!chain[0])
         return { svgElements: [], styles: [] };
     // Track head positions for Tachikoma movement
+    // Offset by -0.5 to center the 2x sized Tachikoma on the cell
     const headPositions = chain.map((snake) => ({
-        x: snake[0] - 2, // head x (offset by 2 as in original)
-        y: snake[1] - 2, // head y
+        x: snake[0] - 2 - 0.5, // head x (offset for centering)
+        y: snake[1] - 2 - 0.5, // head y
     }));
-    const transform = ({ x, y }) => `transform:translate(${x * sizeCell}px,${y * sizeCell}px)`;
     // Find when the Tachikoma changes direction (for facing)
     const getDirection = (i) => {
         if (i === 0)
@@ -91,28 +88,33 @@ const createTachikoma = (chain, { sizeCell }, duration) => {
         dir: getDirection(i),
     }))).map(({ t, dir, ...p }) => ({
         t,
-        style: `${transform(p)}${dir === "left" ? ";transform:translate(" + (p.x * sizeCell) + "px," + (p.y * sizeCell) + "px) scaleX(-1)" : ""}`,
+        style: dir === "left"
+            ? `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px) scaleX(-1)`
+            : `transform:translate(${p.x * sizeCell}px,${p.y * sizeCell}px)`,
     }));
     const styles = [
-        // Tachikoma body styles
+        // Tachikoma body styles - blue spider-tank from Ghost in the Shell
         `.tachi-body {
-      fill: var(--cs);
-      stroke: var(--cs);
-      stroke-width: 0.5;
+      fill: #4a9eff;
+      stroke: #2d7dd2;
+      stroke-width: 1;
+      filter: drop-shadow(0 0 3px rgba(74, 158, 255, 0.5));
     }`,
         `.tachi-eye {
       fill: #ff6b6b;
       stroke: #c92a2a;
-      stroke-width: 0.5;
+      stroke-width: 0.8;
+      filter: drop-shadow(0 0 2px #ff6b6b);
     }`,
         `.tachi-pupil {
       fill: #1a1a2e;
     }`,
         `.tachi-leg {
       fill: none;
-      stroke: var(--cs);
-      stroke-width: 1.5;
+      stroke: #4a9eff;
+      stroke-width: 2;
       stroke-linecap: round;
+      filter: drop-shadow(0 0 2px rgba(74, 158, 255, 0.5));
     }`,
         // Tachikoma container animation
         `.tachikoma {
@@ -125,9 +127,11 @@ const createTachikoma = (chain, { sizeCell }, duration) => {
       filter: drop-shadow(0 0 2px #ff6b6b);
     }`,
     ];
+    // Make Tachikoma 2x cell size for better visibility
+    const tachiSize = sizeCell * 2;
     const svgElements = [
         `<g class="tachikoma">`,
-        createTachikomaPath(sizeCell),
+        ...createTachikomaPath(tachiSize),
         `</g>`,
     ];
     return { svgElements, styles };
@@ -181,12 +185,15 @@ const createGrid = (cells, { sizeDotBorderRadius, sizeDot, sizeCell }, duration)
         if (t !== null && id) {
             const animationName = id;
             const explosionName = `exp-${id}`;
-            // Cell destruction animation - flash then shrink to nothing
+            // Cell destruction animation - delay then flash and shrink (looks like being shot)
+            // Tachikoma reaches cell at t, explosion happens at t + 0.003 (small delay for "shooting" feel)
+            const hitTime = t + 0.003;
             styles.push(createAnimation(animationName, [
-                { t: t - 0.002, style: `fill:var(--c${color});transform:scale(1)` },
-                { t: t - 0.001, style: `fill:#ff6b6b;transform:scale(1.2)` },
-                { t: t + 0.001, style: `fill:var(--ce);transform:scale(0)` },
-                { t: t + 0.01, style: `fill:var(--ce);transform:scale(1)` },
+                { t: t, style: `fill:var(--c${color});transform:scale(1)` },
+                { t: hitTime, style: `fill:var(--c${color});transform:scale(1)` },
+                { t: hitTime + 0.001, style: `fill:#ff6b6b;transform:scale(1.3)` },
+                { t: hitTime + 0.003, style: `fill:var(--ce);transform:scale(0)` },
+                { t: hitTime + 0.02, style: `fill:var(--ce);transform:scale(1)` },
                 { t: 1, style: `fill:var(--ce);transform:scale(1)` },
             ]), `.c.${id}{
           fill: var(--c${color});
@@ -194,11 +201,11 @@ const createGrid = (cells, { sizeDotBorderRadius, sizeDot, sizeCell }, duration)
           transform-box: fill-box;
           transform-origin: center;
         }`, 
-            // Explosion flash overlay
+            // Explosion flash overlay - bigger and more visible
             createAnimation(explosionName, [
-                { t: t - 0.002, style: `opacity:0;r:0` },
-                { t: t - 0.001, style: `opacity:1;r:${sizeDot}` },
-                { t: t + 0.005, style: `opacity:0;r:${sizeDot * 1.5}` },
+                { t: hitTime, style: `opacity:0;r:0` },
+                { t: hitTime + 0.001, style: `opacity:1;r:${sizeDot * 1.2}` },
+                { t: hitTime + 0.008, style: `opacity:0;r:${sizeDot * 2}` },
                 { t: 1, style: `opacity:0;r:0` },
             ]), `.explosion.${id}{
           animation-name: ${explosionName}
