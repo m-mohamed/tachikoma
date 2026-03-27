@@ -1,8 +1,8 @@
 # tachikoma
 
-GitHub contribution grid action that renders an RX-78-2 Gundam instead of the original snake.
+GitHub contribution-grid action that renders an RX-78-2 Gundam across the graph.
 
-This fork is maintained as profile infrastructure for [`m-mohamed/m-mohamed`](https://github.com/m-mohamed/m-mohamed). It keeps the upstream contribution-grid logic, but swaps in a Gundam SVG renderer for the generated assets shown on the profile.
+This fork powers the assets used on [`m-mohamed/m-mohamed`](https://github.com/m-mohamed/m-mohamed). It keeps the upstream contribution-grid pipeline, but the maintained surface here is the `svg-only` action plus the custom Gundam renderer.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-mohamed/m-mohamed/output/tachikoma-dark.svg" />
@@ -10,9 +10,15 @@ This fork is maintained as profile infrastructure for [`m-mohamed/m-mohamed`](ht
   <img alt="RX-78-2 Gundam moving across the GitHub contribution graph" src="https://raw.githubusercontent.com/m-mohamed/m-mohamed/output/tachikoma.svg" />
 </picture>
 
-## Usage
+## Maintained entrypoints
 
-Use the SVG-only action in the profile or another README automation:
+- `svg-only` is the main path for profile and README SVG generation.
+- The root Docker action remains available when GIF output is needed.
+- CI is intentionally narrow: typecheck, lint, tests, and smoke coverage for the maintained action paths.
+
+## Quick start
+
+Use the Node-based `svg-only` action in a profile or README automation:
 
 ```yaml
 - uses: m-mohamed/tachikoma/svg-only@main
@@ -22,6 +28,8 @@ Use the SVG-only action in the profile or another README automation:
       dist/tachikoma.svg
       dist/tachikoma-dark.svg?palette=github-dark
 ```
+
+Pin a commit SHA in long-lived workflows instead of `@main`.
 
 Embed the generated assets with light and dark variants:
 
@@ -33,11 +41,11 @@ Embed the generated assets with light and dark variants:
 </picture>
 ```
 
-## Scope
+## Repo notes
 
-- `svg-only` is the maintained path used on the profile.
-- The repo intentionally keeps the upstream package layout to minimize churn.
-- CI is focused on typecheck, lint, tests, and one SVG smoke path.
+- The repo keeps the upstream package layout to minimize churn.
+- Live GitHub API coverage is opt-in only; default tests use fixtures and mocks.
+- The public profile pins the `svg-only` action to a specific commit.
 
 ## Credits
 

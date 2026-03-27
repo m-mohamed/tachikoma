@@ -1,5 +1,5 @@
 name: "generate-github-contribution-gundam"
-description: "Generates GitHub contribution animations with an RX-78-2 Gundam renderer. Output the animation as svg."
+description: "Generates GitHub contribution animations with an RX-78-2 Gundam renderer. Outputs SVG."
 author: "m-mohamed"
 
 runs:
@@ -17,14 +17,14 @@ inputs:
   outputs:
     required: false
     description: |
-      list of files to generate.
-      one file per line. Each output can be customized with options as query string.
+      List of files to generate.
+      One file per line. Each output can be customized with query-string options.
 
-       supported query string options:
+      Supported query-string options:
 
-      - palette:      A preset of color, one of [github, github-dark, github-light]
-      - color_snake:  Color of the snake
-      - color_dots:   Coma separated list of dots color. 
+      - palette:      A color preset, one of [github, github-dark, github-light]
+      - color_snake:  Accent color for the moving renderer
+      - color_dots:   Comma-separated list of dot colors.
                       The first one is 0 contribution, then it goes from the low contribution to the highest.
                       Exactly 5 colors are expected.
 

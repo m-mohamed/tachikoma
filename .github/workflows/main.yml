@@ -43,3 +43,16 @@ jobs:
         run: |
           test -f dist/github-contribution-grid-gundam.svg
           test -f dist/github-contribution-grid-gundam-dark.svg
+
+  docker-action-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: generate contribution gundam gif
+        uses: ./
+        with:
+          github_user_name: platane
+          outputs: |
+            dist/github-contribution-grid-gundam.gif
+      - name: ensure the generated file exists
+        run: test -f dist/github-contribution-grid-gundam.gif
