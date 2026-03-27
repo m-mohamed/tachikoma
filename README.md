@@ -1,8 +1,8 @@
 # tachikoma
 
-GitHub contribution-grid action that renders an RX-78-2 Gundam across the graph.
+GitHub contribution-grid action with a custom RX-78-2 Gundam renderer.
 
-This fork powers the assets used on [`m-mohamed/m-mohamed`](https://github.com/m-mohamed/m-mohamed). It keeps the upstream contribution-grid pipeline, but the maintained surface here is the `svg-only` action plus the custom Gundam renderer.
+This fork powers the assets used on [`m-mohamed/m-mohamed`](https://github.com/m-mohamed/m-mohamed). The maintained surface here is the `svg-only` action plus the custom renderer layered on top of the upstream contribution-grid pipeline.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-mohamed/m-mohamed/output/tachikoma-dark.svg" />

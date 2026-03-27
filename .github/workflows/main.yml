@@ -32,27 +32,27 @@ jobs:
           npm run build:action
           rm -r svg-only/dist
           mv packages/action/dist svg-only/dist
-      - name: generate contribution gundam
+      - name: generate tachikoma svg output
         uses: ./svg-only
         with:
           github_user_name: platane
           outputs: |
-            dist/github-contribution-grid-gundam.svg
-            dist/github-contribution-grid-gundam-dark.svg?palette=github-dark
+            dist/tachikoma.svg
+            dist/tachikoma-dark.svg?palette=github-dark
       - name: ensure the generated file exists
         run: |
-          test -f dist/github-contribution-grid-gundam.svg
-          test -f dist/github-contribution-grid-gundam-dark.svg
+          test -f dist/tachikoma.svg
+          test -f dist/tachikoma-dark.svg
 
   docker-action-smoke:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - name: generate contribution gundam gif
+      - name: generate tachikoma gif output
         uses: ./
         with:
           github_user_name: platane
           outputs: |
-            dist/github-contribution-grid-gundam.gif
+            dist/tachikoma.gif
       - name: ensure the generated file exists
-        run: test -f dist/github-contribution-grid-gundam.gif
+        run: test -f dist/tachikoma.gif

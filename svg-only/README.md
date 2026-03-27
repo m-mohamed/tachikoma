@@ -1,4 +1,4 @@
-# svg-only
+# tachikoma/svg-only
 
 Node-based GitHub Action for generating SVG contribution animations from this fork.
 

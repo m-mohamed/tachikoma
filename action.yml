@@ -1,5 +1,5 @@
-name: "generate-github-contribution-gundam"
-description: "Generates GitHub contribution animations with an RX-78-2 Gundam renderer. Outputs SVG or GIF."
+name: "generate-github-contribution-tachikoma"
+description: "Generates GitHub contribution animations from the Tachikoma fork with an RX-78-2 Gundam renderer. Outputs SVG or GIF."
 author: "m-mohamed"
 
 runs:
