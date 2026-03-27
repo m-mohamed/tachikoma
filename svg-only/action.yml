@@ -3,7 +3,7 @@ description: "Generates GitHub contribution animations with an RX-78-2 Gundam re
 author: "m-mohamed"
 
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
 
 inputs:
