@@ -4,7 +4,7 @@ exports[`should parse path/to/out.gif 1`] = `
 {
   "animationOptions": {
     "frameByStep": 1,
-    "stepDurationMs": 100,
+    "stepDurationMs": 150,
   },
   "drawOptions": {
     "colorBackground": "#ffffff",
@@ -31,7 +31,7 @@ exports[`should parse /out.svg?color_snake=orange&color_dots=#000,#111,#222,#333
 {
   "animationOptions": {
     "frameByStep": 1,
-    "stepDurationMs": 100,
+    "stepDurationMs": 150,
   },
   "drawOptions": {
     "colorBackground": "#ffffff",
@@ -58,7 +58,7 @@ exports[`should parse /out.svg?{"color_snake":"yellow","color_dots":["#000","#11
 {
   "animationOptions": {
     "frameByStep": 1,
-    "stepDurationMs": 100,
+    "stepDurationMs": 150,
   },
   "drawOptions": {
     "colorBackground": "#ffffff",
